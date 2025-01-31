@@ -1,0 +1,5 @@
+tr.bg-danger > td {
+    background: var(--bs-danger-rgb);
+    color: #FFFFFF;
+    vertical-align: middle;
+}

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  php:
+    build: ./backend
+    container_name: movie_rental_php
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_DATABASE: movie_rental
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+
+  db:
+    image: mysql:8
+    container_name: movie_rental_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: movie_rental
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+
+volumes:
+  mysql_data:
